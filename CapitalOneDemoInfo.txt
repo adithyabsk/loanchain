@@ -1,0 +1,16 @@
+Customer_ID: 59fe5112b390353c953a1d9e
+Name: John Smith
+No. Accounts: 1
+	Account ID: 59fe03a2a73e4942cdafe77c
+	Type: Savings
+	Nickname: Adrianna's Account
+	Balance: 18356
+		Loan ID: 59fe5373b390353c953a1dad
+		Type: home
+		Status: pending
+		Amount: 400000
+		Description: Adriana's home loan
+		Creation Date: 2017-11-04
+
+--> For demo use this stuff!!!
+	
