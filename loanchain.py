@@ -77,10 +77,7 @@ def get_loan():
 @app.route('/bank/gatherMoreLoanData', methods=['POST'])
 def gather_more_loan_data():
     data = request.form
-    
-    
-
-
+    generate_smart_contract(data["amount"], data["maturity"])
     return render_template("complete.html")
 
 if __name__ == "__main__":
