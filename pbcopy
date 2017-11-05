@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 contract loanterms
 {
-    address lender;
+    address lender = 0xE2836fB7Ad6f59B90CDa462AD277DCc6c880a4f5;
     address ratesource; 
     uint total; //total balance of loan
     uint min_payment; //minimum payment per payment cycle
@@ -10,7 +10,7 @@ contract loanterms
     uint rate; //interest rate of the loan*1000
     uint time_init; //time when contract was initiated
     uint time_last_calc; //time when interest was calculated last
-    bool hasbeeninitted = false; //flag for loan having terms set 
+    bool hasbeeninitted = false; //flag for loan having terms set
     //bool is_defunct; //flag for delinquent loans
     bool fullypaid; //flag for fully paid
     address swapaddresslender; //address of loan with new terms approved by lender
@@ -21,42 +21,47 @@ contract loanterms
     bool needsupdate = false;
     uint Aproposed = 0;
     uint yesvotes = 0;
-    function loanterms(uint _total, uint _maturity, address _ratesource)
+    function callrates()
     {
-        lender = msg.sender;
-        maturity = _maturity;
-        total = _total;
-        ratesource = _ratesource;
-        determinerate ratefinder = determinerate(ratesource);
-        rate = ratefinder.getrate();
-        payed = 0;
+        needsupdate = true;
+    }
+    function initloan(uint _total, uint _maturity, address _ratesource) public 
+    {//initialize loan
+        if((msg.sender == lender) && (hasbeeninitted == false))
+        {
+            maturity = _maturity;
+            total = _total;
+            ratesource = _ratesource
+            determinerate ratefinder = determinerate(ratesource);
+            rate = ratefinder.getrate();
+            trustedgroup = _trustedgroup;
+            payed = 0;
+        }
     }
     function makepayment() public payable
     {//function for the client to approve the payment
         total -= msg.value;
         payed += msg.value;
-    }   
-    function calcinterest() 
+    }
+    function calcinterest() returns(uint aft, uint bef)
     {//determine the interest which has accrued and add it to the total value of the loan
         determinerate ratefinder = determinerate(ratesource);
         rate = ratefinder.getrate();
-        uint time_since_last_payed = 5;
+        uint previous = total;
+        uint time_since_last_payed = 2;
         uint256 num = (ratescale + rate)**(time_since_last_payed);
         uint256 denom = ratescale**(time_since_last_payed);
         total = (total*num)/denom;
-    }   
-    function withdraw()
+        return (total, previous);
+    }
+    function withdraw() public
     {//transfer the paid balance of the loan to the bank
-        lender.send(this.balance);
-    }   
-    function viewbalance() returns (uint remainingbalance)
-    {
-        return total;
+        lender.transfer(this.balance);
     }
 }
 contract determinerate
 {
-    address[] trustedbanks = [0xca35b7d915458ef540ade6068dfe2f44e8fa733c,0x8D7D242D87fb67Ad22bFCF0e4D10933d4dC8F700,0x770a05A923D2F22603CC1897660963D1B078B731];
+    address[] trustedbanks = [0xd0091B33c615d97CD116e454FDd8a8476C723def,0x8D7D242D87fb67Ad22bFCF0e4D10933d4dC8F700,0x770a05A923D2F22603CC1897660963D1B078B731];
     uint rate;
     function setrate(uint _rate)
     {
@@ -70,12 +75,12 @@ contract determinerate
         }
         if(trusted)
         {
-            rate = _rate;
+            rate = _rate;  
         }
     }
     function getrate() returns (uint intrate)
     {
         return rate;
     }
-
+    
 }
