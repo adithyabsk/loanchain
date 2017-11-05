@@ -21,6 +21,7 @@ contract loanterms
     bool needsupdate = false;
     uint Aproposed = 0;
     uint yesvotes = 0;
+    uint shouldbepayed;
     function loanterms(uint _total, uint _maturity, address _ratesource)
     {
         lender = msg.sender;
@@ -30,7 +31,15 @@ contract loanterms
         determinerate ratefinder = determinerate(ratesource);
         rate = ratefinder.getrate();
         payed = 0;
+        shouldbepayed = 0;
     }
+    /*
+    function setminpayment(uint A)
+    {
+        shouldbepayed += min_payment * cyclelength;
+        min_payment = A;
+    }
+    */
     function makepayment() public payable
     {//function for the client to approve the payment
         total -= msg.value;
