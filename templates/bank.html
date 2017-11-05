@@ -4,11 +4,91 @@
 {% block title %}Load a loan{% endblock %}
 {% block body %}
 <div class="jumbotron">
-  <h1>CapitalOne: Load a Loan</h1>
-  <p class="lead">Enter a loan id</p>
-  <form action="." method="POST">
-        <input type="text" name="text">
-        <input type="submit" name="my-form" value="Send">
-  </form>  
+  <h1>CapitalOne Loans</h1>
+  <form action="/bank/getLoan" method="POST">
+    <table align="left">
+      <tr>
+        <td><span>Loan Id: </span></td>
+        <td><input type="text" name="id" value="{{input_default}}" {{input_disabled}}/></td>
+        <td><input type="submit" name="my-form" value="Get Info" {{submit_disabled}}/></td>
+      </tr>
+    </table>
+  </form>
+  <form action="/bank/postToBlockChain" method="POST" {{rslt_hidden}}>  
+    <table align="left">
+      <tr>
+        <td><h2>Loan Information</h2></td>
+      </tr>
+      <tr>
+        <td><span>Name: </span></td>
+        <td><input type="text" name="name" value="{{name}}" disabled/></td>
+      </tr>
+      <tr>
+        <td><span>Amount: </span></td>
+        <td><input type="text" name="amount" value="{{amount}}" disabled/></td>
+      </tr>
+      <tr>
+        <td><span>Initial Rate: </span></td>
+        <td><input type="text" name="initial_rate" value="5.4"/></td>
+      </tr>
+      <tr>
+        <td><span>Payment type: </span></td>
+        <td><select selected="amortizing">
+          <option value="amortizing">Amortizing</option>
+          <option value="level_principal">Amortizing Level Principal</option>
+          <option value="single_pay">Single Pay, Interest Only</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td><span>Maturity: </span></td>
+        <td><input type="text" name="maturity" value="120"/></td>
+      </tr>
+      <tr>
+        <td><span>Amortization: </span></td>
+        <td><input type="text" name="amortization" value="240"/></td>
+      </tr>
+      <tr>
+        <td><span>Index: </span></td>
+        <td><select selected="treasury">
+          <option value="treasury">Treasury</option>
+          <option value="libor">Libor</option>
+          <option value="prime">Prime</option>
+          <option value="fhlb">FHLB Funding Curve</option>
+        </select></td>
+      </tr>
+      <tr>
+        <td><span>Spread: </span></td>
+        <td><input type="text" name="spread" value="2.662"/></td>
+      </tr>
+      <tr>
+        <td><span>Fixed Period: </span></td>
+        <td><input type="text" name="fixed_period" value="36"/></td>
+      </tr>
+      <tr>
+        <td><span>Adjustment Period: </span></td>
+        <td><input type="text" name="adjustment_period" value="12"/></td>
+      </tr>
+      <tr>
+        <td><span>Fees: </span></td>
+        <td><input type="text" name="fees" value="12500"/></td>
+      </tr>
+      <tr>
+        <td><input type="submit" name="my-form" value="Get Info" {{submit_disabled}}/></td>
+     </tr>
+    </table> 
+  </form>
+  <!-- TODO: Add front end engine to calculate Net income, ROA, and ROE -->
+  {% if api_get_successful == 1 %}
+  <div class="alert alert-success alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+    <strong>Success!</strong> Recieved data from Capital One API
+  </div>
+  {% elif api_get_successful == -1  %}
+  <div class="alert alert-danger alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error!</strong> {{api_error_message}}
+  </div>
+  {% else %}
+  {% endif %}
 </div>
 {% endblock %}
