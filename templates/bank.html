@@ -5,7 +5,7 @@
 {% block body %}
 <div class="jumbotron" style="height: 100%">
   <h1>CapitalOne Loans</h1>
-  <form action="/bank/getLoan" method="POST" style="padding-left:20%;">
+  <form action="/bank/getLoan" method="POST" style="padding-left:25%;">
     <table align="left">
       <tr>
         <td><span>Loan Id: </span></td>
@@ -14,7 +14,7 @@
       </tr>
     </table>
   </form>
-  <form action="/bank/postToBlockChain" method="POST" style="padding-left:20%; width:10%;" {{rslt_hidden}}>  
+  <form action="/bank/postToBlockChain" method="POST" style="padding-left:25%; width:10%;" {{rslt_hidden}}>  
     <table align="left">
       <tr>
         <td><h2>Loan Information</h2></td>
@@ -78,17 +78,5 @@
     </table> 
   </form>
   <!-- TODO: Add front end engine to calculate Net income, ROA, and ROE -->
-  {% if api_get_successful == 1 %}
-  <div class="alert alert-success alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
-    <strong>Success!</strong> Recieved data from Capital One API
-  </div>
-  {% elif api_get_successful == -1  %}
-  <div class="alert alert-danger alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Error!</strong> {{api_error_message}}
-  </div>
-  {% else %}
-  {% endif %}
 </div>
 {% endblock %}

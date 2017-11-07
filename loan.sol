@@ -56,31 +56,21 @@ contract loanterms
     }   
     function withdraw()
     {//transfer the paid balance of the loan to the bank
-        lender.send(this.balance);
+        //lender.send(this.balance);
     }   
-    function viewbalance() returns (uint remainingbalance)
+    function viewbalance() constant returns (uint remainingbalance)
     {
         return total;
     }
 }
 contract determinerate
 {
-    address[] trustedbanks = [0xca35b7d915458ef540ade6068dfe2f44e8fa733c,0x8D7D242D87fb67Ad22bFCF0e4D10933d4dC8F700,0x770a05A923D2F22603CC1897660963D1B078B731];
+    //address[] trustedbanks = [0xca35b7d915458ef540ade6068dfe2f44e8fa733c,0x8D7D242D87fb67Ad22bFCF0e4D10933d4dC8F700,0x770a05A923D2F22603CC1897660963D1B078B731];
     uint rate;
     function setrate(uint _rate)
     {
-        bool trusted = false;
-        for (uint i = 0; i < trustedbanks.length; i++)
-        {
-            if(trustedbanks[i] == msg.sender)
-            {
-                trusted = true;
-            }
-        }
-        if(trusted)
-        {
             rate = _rate;
-        }
+
     }
     function getrate() returns (uint intrate)
     {

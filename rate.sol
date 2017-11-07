@@ -5,6 +5,5 @@ contract determinerate
     function proposerate(uint rate)
     {
         bool istrusted = 0;
-        for(int i = 0; i < )
     }
 }
