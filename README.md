@@ -1,5 +1,5 @@
-#Loanchain
-##A Dynamic Smart Contract Generator for Loans to be Securely Deployed on the Blockchain
+# Loanchain
+## A Dynamic Smart Contract Generator for Loans to be Securely Deployed on the Blockchain
 Loanchain is a lending system embedded in the Ethereum blockchain which offers unparalleled transparency of and control over loan agreements for both financial institutions and borrowers.
 Loanchain leverages the power of decentralized computing to allow consumers and banks to hold each other accountable in a publicly available ledger.
 ## Inspiration
